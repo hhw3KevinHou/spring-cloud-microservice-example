@@ -27,16 +27,22 @@ gateway:
    - recommendation
 user:
   image: kbastani/users-microservice
+  ports:
+     - "9000:9000"
   links:
    - discovery
    - configserver
 movie:
   image: kbastani/movie-microservice
+  ports:
+     - "9005:9005"
   links:
    - discovery
    - configserver
 recommendation:
   image: kbastani/recommendation-microservice
+  ports:
+     - "9003:9003"
   links:
    - discovery
    - configserver
