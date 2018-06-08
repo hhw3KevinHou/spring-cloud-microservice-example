@@ -1,23 +1,21 @@
 package data.domain.nodes;
 
-import org.neo4j.graphdb.Direction;
-import org.springframework.data.neo4j.annotation.Fetch;
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedTo;
+
+import org.neo4j.ogm.annotation.*;
 
 @NodeEntity
 public class Event {
-    @GraphId
+    @Id
+    @GeneratedValue
     private Long id;
     private String eventType;
 
-    @Fetch
-    @RelatedTo(type = "ACTION", direction = Direction.INCOMING)
+ 
+    @Relationship(type = "ACTION", direction = Relationship.INCOMING)
     User user;
 
-    @Fetch
-    @RelatedTo(type = "ON", direction = Direction.OUTGOING)
+
+    @Relationship(type = "ON", direction = Relationship.INCOMING)        
     Content content;
 
     public Event() {

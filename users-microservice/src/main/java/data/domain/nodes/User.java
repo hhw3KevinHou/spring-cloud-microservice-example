@@ -1,36 +1,38 @@
 package data.domain.nodes;
 
 import data.domain.rels.Action;
-import org.neo4j.graphdb.Direction;
-import org.springframework.data.neo4j.annotation.*;
+import org.neo4j.ogm.annotation.*;
 
 import java.util.Set;
 
 @NodeEntity
 public class User {
 
-	@GraphId
+	@Id
+                     @GeneratedValue
 	Long id;
 
 	private String firstName;
 	private String lastName;
 	private String phone;
 	private String email;
-	@GraphProperty(propertyType = Long.class)
+	
 	private Long birthDate;
 
-	@Fetch
-	@RelatedTo(type = "FOLLOWS", direction = Direction.OUTGOING, elementClass = User.class)
+	
+                    @Relationship(type = "FOLLOWS", direction = Relationship.OUTGOING)
 	Set<User> follows;
 
-	@Fetch
-	@RelatedTo(type = "FOLLOWS", direction = Direction.INCOMING, elementClass = User.class)
+	
+                    @Relationship(type = "FOLLOWS", direction = Relationship.INCOMING)
 	Set<User> followers;
 
-	@RelatedToVia(type = "ACTION", direction = Direction.OUTGOING)
+	
+                     @Relationship(type = "ACTION", direction = Relationship.OUTGOING)
 	Set<Action> actions;
 
-	@RelatedTo(type = "ACTION", direction = Direction.OUTGOING)
+	
+                    @Relationship(type = "ACTION", direction = Relationship.OUTGOING)
 	Set<Event> events;
 
 	public String getFirstName() {

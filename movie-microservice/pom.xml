@@ -22,21 +22,25 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-rest</artifactId>
         </dependency>
+     
+ 
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-neo4j</artifactId>
+             <groupId>org.springframework.boot</groupId>
+             <artifactId>spring-boot-starter-data-neo4j</artifactId>
+   
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-zuul</artifactId>
+            <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
+            <version>6.0.10.Final</version>
         </dependency>
     </dependencies>
 

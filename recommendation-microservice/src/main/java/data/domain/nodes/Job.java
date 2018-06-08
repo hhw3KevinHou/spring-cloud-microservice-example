@@ -1,23 +1,21 @@
 package data.domain.nodes;
 
 import org.neo4j.graphdb.Direction;
-import org.springframework.data.neo4j.annotation.Fetch;
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedTo;
+import org.neo4j.ogm.annotation.*;
 
 import java.util.Set;
 
 @NodeEntity
 public class Job {
-    @GraphId
+    @Id
+     @GeneratedValue
     private Long id;
 
     private String title;
     private String url;
 
-    @Fetch
-    @RelatedTo(type = "ON", direction = Direction.INCOMING)
+   
+    @Relationship(type = "ON", direction = "NCOMING")
     Set<Event> events;
 
     public String getTitle() {

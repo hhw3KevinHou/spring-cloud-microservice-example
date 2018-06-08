@@ -32,7 +32,7 @@ user:
   links:
    - discovery
    - configserver
-movie:
+movie:   
   image: kbastani/movie-microservice
   ports:
      - "9005:9005"

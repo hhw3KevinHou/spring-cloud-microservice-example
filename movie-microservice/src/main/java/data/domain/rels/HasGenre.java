@@ -2,15 +2,14 @@ package data.domain.rels;
 
 import data.domain.nodes.Genre;
 import data.domain.nodes.Movie;
-import org.springframework.data.neo4j.annotation.EndNode;
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.RelationshipEntity;
-import org.springframework.data.neo4j.annotation.StartNode;
+import org.neo4j.ogm.annotation.*;
 
 @RelationshipEntity(type="HAS_GENRE")
 public class HasGenre {
-    @GraphId
+    @Id
+    @GeneratedValue
     Long id;
+    
     @StartNode
     Movie movie;
     @EndNode

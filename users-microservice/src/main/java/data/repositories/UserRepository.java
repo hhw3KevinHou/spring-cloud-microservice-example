@@ -14,5 +14,7 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
     List<User> findByLastName(@Param("0") String name);
 
     List<User> findAll();
+    
+
 
 }

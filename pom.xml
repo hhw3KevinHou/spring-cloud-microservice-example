@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-starter-parent</artifactId>
-        <version>Brixton.BUILD-SNAPSHOT</version>
+        <version>Finchley.BUILD-SNAPSHOT</version>
         <relativePath/>
         <!-- lookup parent from repository -->
     </parent>
@@ -35,6 +35,18 @@
     </properties>
 
     <dependencies>
+        
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-ogm-embedded-driver</artifactId>
+            <version>${neo4j-ogm.version}</version>
+            
+           </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -55,7 +67,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-parent</artifactId>
-                <version>Brixton.BUILD-SNAPSHOT</version>
+                <version>Finchley.BUILD-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -67,6 +79,14 @@
             <id>spring-snapshots</id>
             <name>Spring Snapshots</name>
             <url>http://repo.spring.io/libs-snapshot-local</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>nexus-aliyun</id>
+            <name>nexus-aliyun</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>

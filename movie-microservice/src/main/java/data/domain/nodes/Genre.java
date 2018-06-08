@@ -1,11 +1,11 @@
 package data.domain.nodes;
 
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.*;
 
 @NodeEntity
 public class Genre {
-    @GraphId
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String name;

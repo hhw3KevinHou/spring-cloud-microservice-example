@@ -3,11 +3,16 @@ server:
 
 eureka:
   client:
+    registryFetchIntervalSeconds: 5
     serviceUrl:
-      defaultZone: http://discovery:8761/eureka/
+      defaultZone: http://192.168.99.100:8761/eureka/
   instance:
     preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 5 
+    leaseExpirationDurationInSeconds: 10
+
 
 ribbon:
+  ServerListRefreshInterval: 2000
   eureka:
     enabled: true

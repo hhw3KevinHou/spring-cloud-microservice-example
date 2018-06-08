@@ -1,14 +1,39 @@
 package application.models;
 
 import org.joda.time.DateTime;
+import org.neo4j.ogm.annotation.GeneratedValue;
+import org.neo4j.ogm.annotation.Id;
+import org.neo4j.ogm.annotation.NodeEntity;
 
+
+@NodeEntity
 public class User {
+    @Id
+    @GeneratedValue
     private Long id;
     private String firstName;
     private String lastName;
     private String phone;
     private String email;
-    private DateTime birthDate;
+    private Long birthDate;
+
+    public User() {
+    }
+
+    public User(Long id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public User(Long id, String firstName, String lastName, String phone, String email, Long birthDate) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.email = email;
+        this.birthDate = birthDate;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -42,11 +67,11 @@ public class User {
         this.email = email;
     }
 
-    public DateTime getBirthDate() {
+    public Long getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(DateTime birthDate) {
+    public void setBirthDate(Long birthDate) {
         this.birthDate = birthDate;
     }
 

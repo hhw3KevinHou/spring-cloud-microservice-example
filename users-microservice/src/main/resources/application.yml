@@ -8,6 +8,23 @@ eureka:
   instance:
     preferIpAddress: true
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream, info, health
+dbms:
+   connector:
+      bolt:
+        address: 0.0.0.0:7687        
 ribbon:
   eureka:
     enabled: true
+    
+hystrix:
+   command:
+      default:
+         execution:
+             isolation:
+                  thread:
+                       timeoutInMilliseconds: 8000

@@ -1,13 +1,13 @@
 package application.ui;
 
 import application.models.User;
-import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup;
+import com.vaadin.data.Binder;
+
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
-
+import  application.util.*;
 /* Create custom UI Components.
  *
  * Create your own Vaadin components by inheritance and composition.
@@ -29,7 +29,7 @@ public class ContactForm extends FormLayout {
     User contact;
 
     // Easily bind forms to beans and manage validation and buffering
-    BeanFieldGroup<User> formFieldBindings;
+    Binder<User> formFieldBindings = new Binder<>(User.class);
 
     public ContactForm() {
         configureComponents();
@@ -71,32 +71,41 @@ public class ContactForm extends FormLayout {
     public void save(Button.ClickEvent event) {
         try {
             // Commit the fields from UI to DAO
-            formFieldBindings.commit();
-
+            //formFieldBindings.commit();
+            formFieldBindings.writeBean(contact);
             // Save DAO to backend with direct synchronous service API
-            getUI().userClient.createUser(contact);
+            
+            System.out.println(contact.getBirthDate());
+            getUI().userClient.save(contact);
 
             String msg = String.format("Saved '%s %s'.",
                     contact.getFirstName(),
                     contact.getLastName());
             Notification.show(msg, Type.TRAY_NOTIFICATION);
             getUI().refreshContacts();
-        } catch (FieldGroup.CommitException e) {
-            // Validation exceptions could be shown here
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public void cancel(Button.ClickEvent event) {
         // Place to call business logic.
         Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
-        getUI().contactList.select(null);
+        getUI().contactList.deselectAll();
+         setVisible(false);
     }
 
     void edit(User contact) {
         this.contact = contact;
         if (contact != null) {
             // Bind the properties of the contact POJO to fiels in this form
-            formFieldBindings = BeanFieldGroup.bindFieldsBuffered(contact, this);
+        //   formFieldBindings = BeanFieldGroup.bindFieldsBuffered(contact, this);
+           
+            formFieldBindings.forField(birthDate)
+                                            .withConverter(new JodaDateConvertor())
+                                            .bind(User::getBirthDate,User::setBirthDate);
+             formFieldBindings.setBean(contact);
+            formFieldBindings.bindInstanceFields(this);
             firstName.focus();
         }
         setVisible(contact != null);

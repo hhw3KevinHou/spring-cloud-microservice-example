@@ -1,7 +1,7 @@
 package application.clients;
 
 import application.models.User;
-import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +23,6 @@ public interface UserClient {
     @RequestMapping(method = RequestMethod.POST, value = "/users",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    void createUser(@RequestBody User user);
+    void save(@RequestBody User user);
 
 }

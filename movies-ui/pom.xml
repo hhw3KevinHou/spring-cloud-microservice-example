@@ -19,13 +19,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <docker.image.prefix>kbastani</docker.image.prefix>
+        <vaddin.version>8.2.0</vaddin.version>
     </properties>
 
     <dependencies>
+        
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-spring-boot-starter</artifactId>
-            <version>1.0.0.beta3</version>
+            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -33,15 +35,15 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-feign</artifactId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-zuul</artifactId>
+            <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>
@@ -51,7 +53,7 @@
         <dependency>
             <groupId>org.springframework.hateoas</groupId>
             <artifactId>spring-hateoas</artifactId>
-            <version>0.16.0.RELEASE</version>
+          
         </dependency>
     </dependencies>
 
@@ -122,7 +124,7 @@
             </snapshots>
         </repository>
     </repositories>
-
+<!--
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -135,10 +137,10 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-parent</artifactId>
-                <version>Brixton.BUILD-SNAPSHOT</version>
+                <version>Finchley.BUILD-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
         </dependencies>
-    </dependencyManagement>
+    </dependencyManagement> -->
 </project>

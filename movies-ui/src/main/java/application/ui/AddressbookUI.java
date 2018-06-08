@@ -6,11 +6,17 @@ import application.models.User;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.provider.DataProvider;
+import com.vaadin.data.provider.ListDataProvider;
+
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.annotation.WebServlet;
@@ -27,9 +33,9 @@ public class AddressbookUI extends UI {
      * are over 500 more in vaadin.com/directory.
      */
     TextField filter = new TextField();
-    Grid contactList = new Grid();
+    Grid<User> contactList = new Grid<>(User.class);
     Button newContact = new Button("New contact");
-
+    Button refresh = new Button("Refresh");
     // ContactForm is an example of a custom component class
     ContactForm contactForm = new ContactForm();
 
@@ -60,17 +66,23 @@ public class AddressbookUI extends UI {
          * to synchronously handle those events. Vaadin automatically sends
          * only the needed changes to the web page without loading a new page.
          */
-        newContact.addClickListener(e -> contactForm.edit(new User()));
-
-        filter.setInputPrompt("Filter contacts...");
-        filter.addTextChangeListener(e -> refreshContacts(e.getText()));
-
-        contactList.setContainerDataSource(new BeanItemContainer<>(User.class));
-        contactList.setColumnOrder("id", "firstName", "lastName", "email");
-        contactList.removeColumn("birthDate");
+        newContact.addClickListener(e -> contactForm.edit(new User(null,"dcd","r3","jjj","ooo", LocalDate.now().toEpochDay())));
+       refresh.addClickListener(e ->refreshContacts());
+        filter.setPlaceholder("Filter contacts...");
+        filter.addBlurListener(e -> refreshContacts(e.toString()));
+        
+        
+        List<User> initList = new ArrayList<User>();
+        initList.add(new User(new Long("111"),"ddd","rrr"));
+        ListDataProvider<User> dataProviderOBM=  DataProvider.ofCollection(initList);
+        contactList.setDataProvider(dataProviderOBM);
+       
+         contactList.setColumnOrder( "firstName", "lastName", "email");
+       // contactList.removeColumn("birthDate");
         contactList.setSelectionMode(Grid.SelectionMode.SINGLE);
-        contactList.addSelectionListener(e
-                -> contactForm.edit((User) contactList.getSelectedRow()));
+        contactList.addSelectionListener(e  -> {Set<User> set = contactList.getSelectedItems();
+                                                                          contactForm.edit(set.iterator().hasNext()?(User)set.iterator().next():null);}
+         );
         refreshContacts();
     }
 
@@ -86,7 +98,7 @@ public class AddressbookUI extends UI {
      * with Vaadin Designer, CSS and HTML.
      */
     private void buildLayout() {
-        HorizontalLayout actions = new HorizontalLayout(filter, newContact);
+        HorizontalLayout actions = new HorizontalLayout(filter, newContact,refresh);
         actions.setWidth("100%");
         filter.setWidth("100%");
         actions.setExpandRatio(filter, 1);
@@ -117,8 +129,11 @@ public class AddressbookUI extends UI {
     }
 
     private void refreshContacts(String stringFilter) {
-        contactList.setContainerDataSource(new BeanItemContainer<>(
-                User.class, userClient.findAll().getContent()));
+        ListDataProvider<User> dataProvider = new ListDataProvider<User>(
+                 userClient.findAll().getContent());
+        contactList.setDataProvider(dataProvider);
+        System.out.println(userClient.findAll().getContent());
+         dataProvider.refreshAll();
         contactForm.setVisible(false);
     }
 
